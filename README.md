@@ -1,1 +1,1 @@
-# Smart Season Field Monitoring System
+# SmartSeason Field Monitoring System (SFMS)
