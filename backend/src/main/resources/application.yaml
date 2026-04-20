@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: backend
+    jwt:
+      secret: a-string-secret-at-least-256-bits-long
+      expiration-ms: 86400000 # 24 hours
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sfms
+    username: "postgres"
+    password: "secret"
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  jackson:
+    default-property-inclusion: non_null
