@@ -2,20 +2,7 @@ package io.github.devcavin.backend.entity
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import io.github.devcavin.backend.enums.FieldStage
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.FetchType
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.Table
-import org.hibernate.annotations.CreationTimestamp
-import org.hibernate.annotations.UpdateTimestamp
-import java.time.Instant
+import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity
@@ -32,7 +19,7 @@ class Field(
     var cropType: String,
 
     @Column(nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @field:JsonFormat(pattern = "yyyy-MM-dd")
     var plantingDate: LocalDate,
 
     @Column(nullable = false)
@@ -43,13 +30,6 @@ class Field(
     @JoinColumn(name = "agent_id", nullable = false)
     var assignedAgent: User
 ) {
-    @CreationTimestamp
-    @Column(updatable = false)
-    lateinit var createdAt: Instant
-
-    @UpdateTimestamp
-    var updatedAt: Instant? = null
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Field) return false
