@@ -1,6 +1,6 @@
 package io.github.devcavin.backend.exception
 
-import devcavin.pesacore.dto.ErrorResponse
+import io.github.devcavin.backend.dto.ErrorResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException

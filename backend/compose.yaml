@@ -8,8 +8,6 @@ services:
       POSTGRES_PASSWORD: secret
     ports:
       - "5432:5432"
-    networks:
-      - sfmsnet
     volumes:
       - sfms_data:/var/lib/postgresql/data
     healthcheck:
@@ -17,27 +15,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-
-  app:
-    build:
-      context: .
-      dockerfile: Containerfile
-    image: sfms:latest
-    container_name: sfms-app
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sfms
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: secret
-    ports:
-      - "8080:8080"
-    networks:
-      - sfmsnet
-
-networks:
-  sfmsnet:
 
 volumes:
   sfms_data:
