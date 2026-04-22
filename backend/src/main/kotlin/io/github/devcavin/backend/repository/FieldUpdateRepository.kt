@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface FieldUpdateRepository : JpaRepository<FieldUpdate, Long> {
     fun findByFieldOrderByCreatedAtDesc(field: Field): List<FieldUpdate>
+    fun findByAgentIdOrderByCreatedAtDesc(agentId: Long): List<FieldUpdate>
 }
