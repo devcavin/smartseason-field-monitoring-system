@@ -6,9 +6,8 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import java.util.Date
+import java.util.*
 import javax.crypto.SecretKey
-import javax.management.relation.Role
 
 @Component
 class JwtUtil(
