@@ -2,6 +2,8 @@ package io.github.devcavin.backend.entity
 
 import io.github.devcavin.backend.enums.FieldStage
 import jakarta.persistence.*
+import org.hibernate.annotations.CreationTimestamp
+import java.time.Instant
 
 @Entity
 @Table(name = "field_updates")
@@ -25,6 +27,10 @@ class FieldUpdate(
     @Enumerated(EnumType.STRING)
     var newStage: FieldStage? = null,
 ) {
+    @CreationTimestamp
+    @Column(updatable = false)
+    lateinit var createdAt: Instant
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is FieldUpdate) return false
