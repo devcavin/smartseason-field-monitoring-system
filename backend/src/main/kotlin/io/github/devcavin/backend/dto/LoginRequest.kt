@@ -1,6 +1,5 @@
 package io.github.devcavin.backend.dto
 
-import io.github.devcavin.backend.entity.User
 import jakarta.validation.constraints.NotNull
 
 data class LoginRequest(
