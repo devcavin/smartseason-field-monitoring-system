@@ -17,3 +17,14 @@ spring:
 
   jackson:
     default-property-inclusion: non_null
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+    io:
+      github:
+        devcavin:
+          backend:
+            security: DEBUG
