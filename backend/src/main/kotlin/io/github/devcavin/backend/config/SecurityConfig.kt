@@ -49,7 +49,7 @@ class SecurityConfig(
         configuration.maxAge = 3600L
 
         val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/api/**", configuration)
+        source.registerCorsConfiguration("/**", configuration)
         return source
     }
 
