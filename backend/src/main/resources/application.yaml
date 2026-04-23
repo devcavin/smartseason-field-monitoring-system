@@ -2,13 +2,13 @@ spring:
   application:
     name: backend
     jwt:
-      secret: a-string-secret-at-least-256-bits-long
+      secret: ${JWT_SECRET}
       expiration-ms: 86400000 # 24 hours
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/sfms
-    username: "postgres"
-    password: "secret"
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
   jpa:
     hibernate:
@@ -28,3 +28,9 @@ logging:
         devcavin:
           backend:
             security: DEBUG
+
+server:
+  port: ${PORT:8080}
+
+app:
+  frontend-url: ${FRONTEND_URL}
