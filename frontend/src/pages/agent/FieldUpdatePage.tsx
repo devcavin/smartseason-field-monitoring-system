@@ -11,7 +11,7 @@ export default function FieldUpdatePage() {
   const queryClient = useQueryClient()
   const id = Number(fieldId)
 
-  const [newStage, setNewStage] = useState('')
+  const [newStage, setNewStage] = useState<FieldStage | undefined>(undefined)
   const [note, setNote] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
@@ -28,16 +28,17 @@ export default function FieldUpdatePage() {
   })
 
   const mutation = useMutation({
-    mutationFn: () => addFieldUpdate(id, {
-      newStage: newStage || undefined,
-      note: note.trim() || undefined
-    }),
+    mutationFn: () =>
+      addFieldUpdate(id, {
+        newStage: newStage,
+        note: note.trim() || undefined
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['agent-field', id] })
       queryClient.invalidateQueries({ queryKey: ['agent-fields'] })
       queryClient.invalidateQueries({ queryKey: ['agent-field-updates', id] })
       queryClient.invalidateQueries({ queryKey: ['agent-dashboard'] })
-      setNewStage('')
+      setNewStage(undefined)
       setNote('')
       setError(null)
       setSuccess(true)
@@ -116,14 +117,20 @@ export default function FieldUpdatePage() {
               <span className="text-gray-400 font-normal ml-1">(optional)</span>
             </label>
             <select
-              value={newStage}
-              onChange={(e) => setNewStage(e.target.value)}
+              value={newStage ?? ''}
+              onChange={(e) =>
+                setNewStage(
+                  e.target.value
+                    ? (e.target.value as FieldStage)
+                    : undefined
+                )
+              }
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">No stage change</option>
               {stages
                 .filter((s) => {
-                  const order = ['PLANTED', 'GROWING', 'READY', 'HARVESTED']
+                  const order: FieldStage[] = ['PLANTED', 'GROWING', 'READY', 'HARVESTED']
                   return order.indexOf(s) === order.indexOf(field.stage) + 1
                 })
                 .map(s => (
