@@ -1,13 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { getAgentDashboard } from '../../api/dashboard'
 import { useAuth } from '../../context/AuthContext'
-import type { FieldStatus } from '../../types'
-
-const statusColors: Record<FieldStatus, string> = {
-  ACTIVE: 'text-green-600',
-  AT_RISK: 'text-red-600',
-  COMPLETED: 'text-gray-500'
-}
 
 export default function AgentDashboard() {
   const { user } = useAuth()
