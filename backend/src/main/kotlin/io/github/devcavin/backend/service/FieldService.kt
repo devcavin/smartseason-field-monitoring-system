@@ -98,15 +98,25 @@ class FieldService(
     }
 
     @Transactional
-    fun addFieldUpdate(fieldId: Long, agentUsername: String, request: AddFieldUpdateRequest): FieldUpdateResponse {
+    fun addFieldUpdate(fieldId: Long, username: String, request: AddFieldUpdateRequest): FieldUpdateResponse {
         val field = findFieldOrThrow(fieldId)
-        val agent = findAgentOrThrow(agentUsername)
+        val agent = findAgentOrThrow(username)
 
         if (field.assignedAgent.id != agent.id) {
-            throw ResourceNotFoundException("Agent not found")
+            throw ResourceNotFoundException("Field with id $fieldId not found")
         }
 
-        request.newStage?.let { field.stage = it }
+        // Validate stage transition if a new stage is requested
+        request.newStage?.let { newStage ->
+            if (!fieldStatusService.isValidTransition(field.stage, newStage)) {
+                throw IllegalArgumentException(
+                    "Invalid stage transition: cannot move from ${field.stage} to $newStage. " +
+                            "Expected next stage is ${fieldStatusService.nextStage(field.stage) ?: "none — field is already harvested"}"
+                )
+            }
+            field.stage = newStage
+        }
+
         fieldRepository.save(field)
 
         val update = FieldUpdate(

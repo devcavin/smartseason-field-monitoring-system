@@ -8,6 +8,14 @@ import java.time.LocalDate
 
 @Service
 class FieldStatusService {
+
+    private val stageOrder = listOf(
+        FieldStage.PLANTED,
+        FieldStage.GROWING,
+        FieldStage.READY,
+        FieldStage.HARVESTED
+    )
+
     private val stageThresholds = mapOf(
         FieldStage.PLANTED to 14,
         FieldStage.GROWING to 60,
@@ -15,17 +23,25 @@ class FieldStatusService {
     )
 
     fun computeFieldStatus(field: Field): FieldStatus {
-        // Harvested fields are considered complete
         if (field.stage == FieldStage.HARVESTED) return FieldStatus.COMPLETED
 
-        // days elapsed since planting
         val daysSincePlanting = LocalDate.now().toEpochDay() - field.plantingDate.toEpochDay()
 
-        // Determine if field has exceeded expected duration per stage
         val isAtRisk = stageThresholds[field.stage]
             ?.let { daysSincePlanting > it }
-        ?: false
+            ?: false
 
         return if (isAtRisk) FieldStatus.AT_RISK else FieldStatus.ACTIVE
+    }
+
+    fun isValidTransition(current: FieldStage, next: FieldStage): Boolean {
+        val currentIndex = stageOrder.indexOf(current)
+        val nextIndex = stageOrder.indexOf(next)
+        return nextIndex == currentIndex + 1
+    }
+
+    fun nextStage(current: FieldStage): FieldStage? {
+        val currentIndex = stageOrder.indexOf(current)
+        return stageOrder.getOrNull(currentIndex + 1)
     }
 }
