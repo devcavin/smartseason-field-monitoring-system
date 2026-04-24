@@ -19,12 +19,12 @@ export interface CreateFieldRequest {
     cropType: string,
     plantingDate: string,
     agentId: number,
-    fieldStage: FieldStage | null
+    fieldStage?: FieldStage
 }
 
 export interface addFieldUpdateRequest {
-    newStage: FieldStage | null,
-    note: string | null
+    newStage?: FieldStage,
+    note?: string
 }
 
 export interface AuthResponse {

@@ -49,7 +49,7 @@ export default function FieldsPage() {
       cropType: form.cropType,
       plantingDate: form.plantingDate,
       agentId: Number(form.agentId),
-      stage: form.stage || undefined
+      fieldStage: (form.stage as FieldStage) || undefined
     })
   }
 
