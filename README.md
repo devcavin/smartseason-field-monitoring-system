@@ -35,9 +35,26 @@ A web application that helps track crop progress across multiple fields during a
 ```bash
    git clone https://github.com/devcavin/smartseason-field-monitoring-system
    cd smartseason-field-monitoring-system/backend
-```   
+```  
 
-3. Run the application
+
+### Configuration
+
+The following environment variables are used:
+
+- SpringBoot
+    - JWT_SECRET
+    - FRONTEND_URL
+    - SPRING_DATASOURCE_PASSWORD
+    - SPRING_DATASOURCE_URL
+    - SPRING_DATASOURCE_USERNAME
+
+- Vite
+    - VITE_API_URL
+
+Default values are provided for local development.
+
+2. Run the application
 ```bash
    ./gradlew bootRun
 ```
@@ -64,28 +81,26 @@ The frontend will be available at `http://localhost:5173`
 | ADMIN | admin    | admin123 |
 | AGENT | agent   | agent123  |
 
-> Register these via `POST /api/v1/auth/register` or use the Swagger UI before testing.
-
 ---
 
 ## API Overview
 
 | Method | Endpoint | Role | Description |
 |--------|----------|------|-------------|
-| POST | `/api/v1/auth/register` | Public | Register a user |
-| POST | `/api/v1/auth/login` | Public | Login and receive JWT |
-| GET | `/api/v1/admin/dashboard` | Admin | Admin dashboard overview |
-| GET | `/api/v1/admin/fields` | Admin | All fields |
-| POST | `/api/v1/admin/fields` | Admin | Create a field |
-| GET | `/api/v1/admin/fields/{id}` | Admin | Get field by ID |
-| PATCH | `/api/v1/admin/fields/{id}/reassign` | Admin | Reassign field to agent |
-| DELETE | `/api/v1/admin/fields/{id}` | Admin | Delete a field |
-| GET | `/api/v1/admin/fields/{id}/updates` | Admin | View all updates on a field |
-| GET | `/api/v1/agent/dashboard` | Agent | Agent dashboard overview |
-| GET | `/api/v1/agent/fields` | Agent | Agent's assigned fields |
-| GET | `/api/v1/agent/fields/{id}` | Agent | Get specific assigned field |
-| POST | `/api/v1/agent/fields/{id}/updates` | Agent | Add update to a field |
-| GET | `/api/v1/agent/fields/{id}/updates` | Agent | View updates on assigned field |
+| POST | `/auth/register` | Public | Register a user |
+| POST | `/auth/login` | Public | Login and receive JWT |
+| GET | `/admin/dashboard` | Admin | Admin dashboard overview |
+| GET | `/admin/fields` | Admin | All fields |
+| POST | `/admin/fields` | Admin | Create a field |
+| GET | `/admin/fields/{id}` | Admin | Get field by ID |
+| PATCH | `/admin/fields/{id}/reassign` | Admin | Reassign field to agent |
+| DELETE | `/admin/fields/{id}` | Admin | Delete a field |
+| GET | `/admin/fields/{id}/updates` | Admin | View all updates on a field |
+| GET | `/agent/dashboard` | Agent | Agent dashboard overview |
+| GET | `/agent/fields` | Agent | Agent's assigned fields |
+| GET | `/agent/fields/{id}` | Agent | Get specific assigned field |
+| POST | `/agent/fields/{id}/updates` | Agent | Add update to a field |
+| GET | `/agent/fields/{id}/updates` | Agent | View updates on assigned field |
 
 ---
 
@@ -161,7 +176,7 @@ specific crop types in a production implementation.
 |---------|-----|
 | Backend API | https://sfms-server.onrender.com |
 | Swagger UI | https://sfms-server.onrender.com/swagger-ui/index.html |
-| Frontend | https://your-vercel-url.vercel.app |
+| Frontend |  https://smartseason-cavin.vercel.app |
 
 ## Screenshots
 
@@ -188,16 +203,6 @@ specific crop types in a production implementation.
 - Only agents can be assigned to fields. The system does not validate the role of the
   assigned user at the database level but enforces it at the service layer.
 - The system assumes all dates are in the server's local timezone.
-
----
-
-## Future Improvements
-
-- Per-field configurable crop maturity periods to support perennial crops
-- Refresh token support for longer-lived sessions
-- Pagination on list endpoints for large datasets
-- Push notifications when a field transitions to AT_RISK status
-- Audit logging for admin actions
 
 ---
 
